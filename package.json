@@ -4,7 +4,7 @@
   "description": "A mostly reasonable approach to JavaScript.",
   "scripts": {
     "lint": "eslint --quiet --ext=md .",
-    "preinstall": "npm run install:config && npm run install:config:base",
+    "postinstall": "npm run install:config && npm run install:config:base",
     "install:config": "cd packages/eslint-config-airbnb && npm prune && npm install",
     "install:config:base": "cd packages/eslint-config-airbnb-base && npm prune && npm install",
     "test": "npm run --silent test:config && npm run --silent test:config:base",
@@ -40,7 +40,8 @@
     "eslint-plugin-import": "file:./packages/eslint-config-airbnb/node_modules/eslint-plugin-import",
     "eslint-plugin-jsx-a11y": "file:./packages/eslint-config-airbnb/node_modules/eslint-plugin-jsx-a11y",
     "eslint-plugin-react": "file:./packages/eslint-config-airbnb/node_modules/eslint-plugin-react",
-    "eslint-plugin-markdown": "^1.0.0-beta.3"
+    "eslint-plugin-markdown": "^1.0.0-beta.3",
+    "in-publish": "^2.0.0"
   },
   "bundledDependencies": [
     "eslint-config-airbnb-base",
