@@ -3,6 +3,7 @@
   "version": "2.0.0",
   "description": "A mostly reasonable approach to JavaScript.",
   "scripts": {
+    "lint": "eslint --quiet --ext=md .",
     "preinstall": "npm run install:config && npm run install:config:base",
     "install:config": "cd packages/eslint-config-airbnb && npm prune && npm install",
     "install:config:base": "cd packages/eslint-config-airbnb-base && npm prune && npm install",
@@ -31,5 +32,20 @@
   "bugs": {
     "url": "https://github.com/airbnb/javascript/issues"
   },
-  "homepage": "https://github.com/airbnb/javascript"
+  "homepage": "https://github.com/airbnb/javascript",
+  "devDependencies": {
+    "eslint": "^3.8.1",
+    "eslint-config-airbnb": "file:./packages/eslint-config-airbnb/",
+    "eslint-config-airbnb-base": "file:./packages/eslint-config-airbnb-base/",
+    "eslint-plugin-import": "file:./packages/eslint-config-airbnb/node_modules/eslint-plugin-import",
+    "eslint-plugin-jsx-a11y": "file:./packages/eslint-config-airbnb/node_modules/eslint-plugin-jsx-a11y",
+    "eslint-plugin-react": "file:./packages/eslint-config-airbnb/node_modules/eslint-plugin-react",
+    "eslint-plugin-markdown": "^1.0.0-beta.3"
+  },
+  "bundledDependencies": [
+    "eslint-config-airbnb-base",
+    "eslint-plugin-import",
+    "eslint-plugin-jsx-a11y",
+    "eslint-plugin-react"
+  ]
 }
