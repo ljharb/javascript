@@ -30,6 +30,7 @@
 
   - If you have internal state and/or refs, prefer `class extends React.Component` over `React.createClass` unless you have a very good reason to use mixins. eslint: [`react/prefer-es6-class`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prefer-es6-class.md) [`react/prefer-stateless-function`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prefer-stateless-function.md)
 
+    <!-- eslint react/prefer-es6-class: 0 -->
     ```jsx
     // bad
     const Listing = React.createClass({
@@ -38,7 +39,9 @@
         return <div>{this.state.hello}</div>;
       }
     });
+    ```
 
+    ```jsx
     // good
     class Listing extends React.Component {
       // ...
@@ -50,6 +53,7 @@
 
     And if you don't have state or refs, prefer normal functions (not arrow functions) over classes:
 
+    <!-- eslint react/prefer-stateless-function: 0 -->
     ```jsx
     // bad
     class Listing extends React.Component {
@@ -57,12 +61,16 @@
         return <div>{this.props.hello}</div>;
       }
     }
+    ```
 
+    ```jsx
     // bad (relying on function name inference is discouraged)
     const Listing = ({ hello }) => (
       <div>{hello}</div>
     );
+    ```
 
+    ```jsx
     // good
     function Listing({ hello }) {
       return <div>{hello}</div>;
@@ -78,7 +86,9 @@
     ```jsx
     // bad
     import reservationCard from './ReservationCard';
+    ```
 
+    ```jsx
     // good
     import ReservationCard from './ReservationCard';
 
@@ -94,10 +104,14 @@
     ```jsx
     // bad
     import Footer from './Footer/Footer';
+    ```
 
+    ```jsx
     // bad
     import Footer from './Footer/index';
+    ```
 
+    ```jsx
     // good
     import Footer from './Footer';
     ```
@@ -110,9 +124,11 @@
     export default function withFoo(WrappedComponent) {
       return function WithFoo(props) {
         return <WrappedComponent {...props} foo />;
-      }
+      };
     }
+    ```
 
+    ```jsx
     // good
     export default function withFoo(WrappedComponent) {
       function WithFoo(props) {
@@ -132,25 +148,32 @@
 
   > Why? People expect props like `style` and `className` to mean one specific thing. Varying this API for a subset of your app makes the code less readable and less maintainable, and may cause bugs.
 
+    <!-- eslint react/style-prop-object: 0 -->
     ```jsx
     // bad
-    <MyComponent style="fancy" />
+    const x = <MyComponent style="fancy" />;
+    ```
 
+    ```jsx
     // good
-    <MyComponent variant="fancy" />
+    const x = <MyComponent variant="fancy" />;
     ```
 
 ## Declaration
 
   - Do not use `displayName` for naming components. Instead, name the component by reference.
 
+    <!-- eslint react/prefer-es6-class: 0 -->
     ```jsx
     // bad
     export default React.createClass({
       displayName: 'ReservationCard',
       // stuff goes here
     });
+    ```
 
+    <!-- eslint react/prefer-stateless-function: 0 -->
+    ```jsx
     // good
     export default class ReservationCard extends React.Component {
     }
@@ -160,27 +183,35 @@
 
   - Follow these alignment styles for JSX syntax. eslint: [`react/jsx-closing-bracket-location`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-closing-bracket-location.md)
 
+    <!-- eslint react/jsx-first-prop-new-line: 0 -->
     ```jsx
     // bad
-    <Foo superLongParam="bar"
-         anotherSuperLongParam="baz" />
+    <MyComponent superLongParam="bar"
+      anotherSuperLongParam="baz" />
+    ```
 
+    ```jsx
     // good
-    <Foo
+    <MyComponent
       superLongParam="bar"
       anotherSuperLongParam="baz"
     />
+    ```
 
+    ```jsx
     // if props fit in one line then keep it on the same line
-    <Foo bar="bar" />
+    <MyComponent bar="bar" />
+    ```
 
+    <!-- globals Quux -->
+    ```jsx
     // children get indented normally
-    <Foo
+    <MyComponent
       superLongParam="bar"
       anotherSuperLongParam="baz"
     >
       <Quux />
-    </Foo>
+    </MyComponent>
     ```
 
 ## Quotes
@@ -190,45 +221,67 @@
   > Why? JSX attributes [can't contain escaped quotes](http://eslint.org/docs/rules/jsx-quotes), so double quotes make contractions like `"don't"` easier to type.
   > Regular HTML attributes also typically use double quotes instead of single, so JSX attributes mirror this convention.
 
+    <!-- eslint jsx-quotes -->
     ```jsx
     // bad
-    <Foo bar='bar' />
+    <MyComponent bar='bar' />
+    ```
 
+    ```jsx
     // good
-    <Foo bar="bar" />
+    <MyComponent bar="bar" />
+    ```
 
+    <!-- eslint quotes: 0 -->
+    ```jsx
     // bad
-    <Foo style={{ left: "20px" }} />
+    <MyComponent style={{ left: "20px" }} />
+    ```
 
+    ```jsx
     // good
-    <Foo style={{ left: '20px' }} />
+    <MyComponent style={{ left: '20px' }} />
     ```
 
 ## Spacing
 
-  - Always include a single space in your self-closing tag. eslint: [`no-multi-spaces`](http://eslint.org/docs/rules/no-multi-spaces), [`react/jsx-space-before-closing`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-space-before-closing.md)
+  - Always include a single space in your self-closing tag. eslint: [`no-multi-spaces`](http://eslint.org/docs/rules/no-multi-spaces), [`react/jsx-space-before-closing`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-space-before-closing.md), [`react/jsx-closing-bracket-location`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-closing-bracket-location.md)
 
+    <!-- eslint react/jsx-space-before-closing: 0 -->
     ```jsx
     // bad
     <Foo/>
+    ```
 
+    <!-- eslint no-multi-spaces: 0 -->
+    ```jsx
     // very bad
     <Foo                 />
+    ```
 
+    <!-- eslint react/jsx-closing-bracket-location: 0 -->
+    ```jsx
     // bad
     <Foo
      />
+    ```
 
+    ```jsx
     // good
     <Foo />
     ```
 
   - Do not pad JSX curly braces with spaces. eslint: [`react/jsx-curly-spacing`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-curly-spacing.md)
 
+    <!-- globals baz -->
+    <!-- eslint react/jsx-curly-spacing: 0 -->
     ```jsx
     // bad
     <Foo bar={ baz } />
+    ```
 
+    <!-- globals baz -->
+    ```jsx
     // good
     <Foo bar={baz} />
     ```
@@ -243,7 +296,9 @@
       UserName="hello"
       phone_number={12345678}
     />
+    ```
 
+    ```jsx
     // good
     <Foo
       userName="hello"
@@ -253,12 +308,15 @@
 
   - Omit the value of the prop when it is explicitly `true`. eslint: [`react/jsx-boolean-value`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-boolean-value.md)
 
+    <!-- eslint react/jsx-boolean-value: 0 -->
     ```jsx
     // bad
     <Foo
       hidden={true}
     />
+    ```
 
+    ```jsx
     // good
     <Foo
       hidden
@@ -267,16 +325,23 @@
 
   - Always include an `alt` prop on `<img>` tags. If the image is presentational, `alt` can be an empty string or the `<img>` must have `role="presentation"`. eslint: [`jsx-a11y/img-has-alt`](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/img-has-alt.md)
 
+    <!-- eslint img-has-alt: 0 -->
     ```jsx
     // bad
     <img src="hello.jpg" />
+    ```
 
+    ```jsx
     // good
     <img src="hello.jpg" alt="Me waving hello" />
+    ```
 
+    ```jsx
     // good
     <img src="hello.jpg" alt="" />
+    ```
 
+    ```jsx
     // good
     <img src="hello.jpg" role="presentation" />
     ```
@@ -285,23 +350,33 @@
 
   > Why? Screenreaders already announce `img` elements as images, so there is no need to include this information in the alt text.
 
+    <!-- eslint jsx-a11y/img-redundant-alt: 0 -->
     ```jsx
     // bad
     <img src="hello.jpg" alt="Picture of me waving hello" />
+    ```
 
+    ```jsx
     // good
     <img src="hello.jpg" alt="Me waving hello" />
     ```
 
   - Use only valid, non-abstract [ARIA roles](https://www.w3.org/TR/wai-aria/roles#role_definitions). eslint: [`jsx-a11y/aria-role`](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/aria-role.md)
 
+    <!-- eslint jsx-a11y/aria-role: 0 -->
     ```jsx
     // bad - not an ARIA role
     <div role="datepicker" />
+    ```
 
+    <!-- eslint jsx-a11y/aria-role: 0 -->
+    ```jsx
     // bad - abstract ARIA role
     <div role="range" />
+    ```
 
+    <!-- eslint jsx-a11y/aria-role: 0 -->
+    ```jsx
     // good
     <div role="button" />
     ```
@@ -310,47 +385,56 @@
 
   > Why? Inconsistencies between keyboard shortcuts and keyboard commands used by people using screenreaders and keyboards complicate accessibility.
 
+  <!-- eslint jsx-a11y/no-access-key: 0 -->
   ```jsx
   // bad
   <div accessKey="h" />
+  ```
 
+  ```jsx
   // good
   <div />
   ```
 
   - Avoid using an array index as `key` prop, prefer a unique ID. ([why?](https://medium.com/@robinpokorny/index-as-a-key-is-an-anti-pattern-e0349aece318))
 
+  <!-- globals Todo, todos -->
   ```jsx
-  // bad
-  {todos.map((todo, index) =>
-    <Todo
-      {...todo}
-      key={index}
-    />
-  )}
+  <div>
+    { /* bad */ }
+    {todos.map((todo, index) =>
+      <Todo
+        {...todo}
+        key={index}
+      />
+    )}
 
-  // good
-  {todos.map(todo => (
-    <Todo
-      {...todo}
-      key={todo.id}
-    />
-  ))}
+    { /* good */ }
+    {todos.map(todo => (
+      <Todo
+        {...todo}
+        key={todo.id}
+      />
+    ))}
+  </div>
   ```
 
 ## Refs
 
   - Always use ref callbacks. eslint: [`react/no-string-refs`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-string-refs.md)
 
+    <!-- eslint react/no-string-refs: 0 -->
     ```jsx
     // bad
     <Foo
       ref="myRef"
     />
+    ```
 
+    ```jsx
     // good
     <Foo
-      ref={ref => { this.myRef = ref; }}
+      ref={(ref) => { this.myRef = ref; }}
     />
     ```
 
@@ -358,27 +442,41 @@
 
   - Wrap JSX tags in parentheses when they span more than one line. eslint: [`react/wrap-multilines`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/wrap-multilines.md)
 
+    <!-- globals MyChild -->
+    <!-- eslint indent: 0, react/wrap-multilines: 0 -->
     ```jsx
-    // bad
-    render() {
-      return <MyComponent className="long body" foo="bar">
-               <MyChild />
-             </MyComponent>;
+    class Foo extends React.Component {
+      // bad
+      render() {
+        return <MyComponent className="long body" foo="bar">
+                 <MyChild />
+               </MyComponent>;
+      }
     }
+    ```
 
-    // good
-    render() {
-      return (
-        <MyComponent className="long body" foo="bar">
-          <MyChild />
-        </MyComponent>
-      );
+    <!-- globals MyChild -->
+    ```jsx
+    class Foo extends React.Component {
+      // good
+      render() {
+        return (
+          <MyComponent className="long body" foo="bar">
+            <MyChild />
+          </MyComponent>
+        );
+      }
     }
+    ```
 
-    // good, when single line
-    render() {
-      const body = <div>hello</div>;
-      return <MyComponent>{body}</MyComponent>;
+    <!-- eslint react/prefer-stateless-function: 0 -->
+    ```jsx
+    class Foo extends React.Component {
+      // good, when single line
+      render() {
+        const body = <MyChild />;
+        return <MyComponent>{body}</MyComponent>;
+      }
     }
     ```
 
@@ -386,24 +484,30 @@
 
   - Always self-close tags that have no children. eslint: [`react/self-closing-comp`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/self-closing-comp.md)
 
+    <!-- eslint react/self-closing-comp: 0 -->
     ```jsx
     // bad
-    <Foo className="stuff"></Foo>
+    <MyComponent className="stuff"></MyComponent>
+    ```
 
+    ```jsx
     // good
-    <Foo className="stuff" />
+    <MyComponent className="stuff" />
     ```
 
   - If your component has multi-line properties, close its tag on a new line. eslint: [`react/jsx-closing-bracket-location`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-closing-bracket-location.md)
 
+    <!-- eslint react/jsx-closing-bracket-location: 0 -->
     ```jsx
     // bad
-    <Foo
+    <MyComponent
       bar="bar"
       baz="baz" />
+    ```
 
+    ```jsx
     // good
-    <Foo
+    <MyComponent
       bar="bar"
       baz="baz"
     />
@@ -413,6 +517,7 @@
 
   - Use arrow functions to close over local variables.
 
+    <!-- globals doSomethingWith -->
     ```jsx
     function ItemList(props) {
       return (
@@ -432,32 +537,35 @@
 
   > Why? A bind call in the render path creates a brand new function on every single render.
 
+    <!-- eslint react/jsx-no-bind: 0 -->
     ```jsx
     // bad
-    class extends React.Component {
-      onClickDiv() {
+    class Foo extends React.Component {
+      onClick() {
         // do stuff
       }
 
       render() {
-        return <div onClick={this.onClickDiv.bind(this)} />
+        return <button type="button" onClick={this.onClick.bind(this)} />
       }
     }
+    ```
 
+    ```jsx
     // good
-    class extends React.Component {
+    class Foo extends React.Component {
       constructor(props) {
         super(props);
 
-        this.onClickDiv = this.onClickDiv.bind(this);
+        this.onClick = this.onClick.bind(this);
       }
 
-      onClickDiv() {
+      onClick() {
         // do stuff
       }
 
       render() {
-        return <div onClick={this.onClickDiv} />
+        return <button type="button" onClick={this.onClick} />
       }
     }
     ```
@@ -465,18 +573,21 @@
   - Do not use underscore prefix for internal methods of a React component.
   > Why? Underscore prefixes are sometimes used as a convention in other languages to denote privacy. But, unlike those languages, there is no native support for privacy in JavaScript, everything is public. Regardless of your intentions, adding underscore prefixes to your properties does not actually make them private, and any property (underscore-prefixed or not) should be treated as being public. See issues [#1024](https://github.com/airbnb/javascript/issues/1024), and [#490](https://github.com/airbnb/javascript/issues/490) for a more in-depth discussion.
 
+    <!-- eslint react/prefer-es6-class: 0 -->
     ```jsx
     // bad
-    React.createClass({
+    const Foo = React.createClass({
       _onClickSubmit() {
         // do stuff
       },
 
       // other stuff
     });
+    ```
 
+    ```jsx
     // good
-    class extends React.Component {
+    class Foo extends React.Component {
       onClickSubmit() {
         // do stuff
       }
@@ -487,15 +598,23 @@
 
   - Be sure to return a value in your `render` methods. eslint: [`react/require-render-return`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/require-render-return.md)
 
+    <!-- eslint react/require-render-return: 0, react/prefer-stateless-function: 0 -->
     ```jsx
-    // bad
-    render() {
-      (<div />);
+    class Foo extends React.Component {
+      // bad
+      render() {
+        (<div />);
+      }
     }
+    ```
 
-    // good
-    render() {
-      return (<div />);
+    <!-- eslint react/prefer-stateless-function: 0 -->
+    ```jsx
+    class Foo extends React.Component {
+      // good
+      render() {
+        return (<div />);
+      }
     }
     ```
 
@@ -539,7 +658,7 @@
       }
 
       render() {
-        return <a href={this.props.url} data-id={this.props.id}>{this.props.text}</a>
+        return (<a href={this.props.url} data-id={this.props.id}>{this.props.text}</a>);
       }
     }
 
