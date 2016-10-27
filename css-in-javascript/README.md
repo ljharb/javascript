@@ -18,18 +18,20 @@
 
     ```js
     // bad
-    {
+    ({
       'bermuda-triangle': {
         display: 'none',
       },
-    }
+    })
+    ```
 
+    ```js
     // good
-    {
+    ({
       bermudaTriangle: {
         display: 'none',
       },
-    }
+    })
     ```
 
   - Use an underscore for modifiers to other styles.
@@ -38,7 +40,7 @@
 
     ```js
     // bad
-    {
+    ({
       bruceBanner: {
         color: 'pink',
         transition: 'color 10s',
@@ -47,10 +49,12 @@
       bruceBannerTheHulk: {
         color: 'green',
       },
-    }
+    })
+    ```
 
+    ```js
     // good
-    {
+    ({
       bruceBanner: {
         color: 'pink',
         transition: 'color 10s',
@@ -59,7 +63,7 @@
       bruceBanner_theHulk: {
         color: 'green',
       },
-    }
+    })
     ```
 
   - Use `selectorName_fallback` for sets of fallback styles.
@@ -68,7 +72,7 @@
 
     ```js
     // bad
-    {
+    ({
       muscles: {
         display: 'flex',
       },
@@ -76,10 +80,12 @@
       muscles_sadBears: {
         width: '100%',
       },
-    }
+    })
+    ```
 
+    ```js
     // good
-    {
+    ({
       muscles: {
         display: 'flex',
       },
@@ -87,7 +93,7 @@
       muscles_fallback: {
         width: '100%',
       },
-    }
+    })
     ```
 
   - Use a separate selector for sets of fallback styles.
@@ -96,7 +102,7 @@
 
     ```js
     // bad
-    {
+    ({
       muscles: {
         display: 'flex',
       },
@@ -109,10 +115,12 @@
       right: {
         display: 'inline-block',
       },
-    }
+    })
+    ```
 
+    ```js
     // good
-    {
+    ({
       muscles: {
         display: 'flex',
       },
@@ -128,7 +136,7 @@
       right_fallback: {
         display: 'inline-block',
       },
-    }
+    })
     ```
 
   - Use device-agnostic names (e.g. "small", "medium", and "large") to name media query breakpoints.
@@ -142,7 +150,9 @@
       tablet: '@media (max-width: 1047px)',
       desktop: '@media (min-width: 1048px)',
     };
+    ```
 
+    ```js
     // good
     const breakpoints = {
       small: '@media (max-width: 639px)',
@@ -157,6 +167,7 @@
 
   > Why? We use a higher-order component to theme our styles, which is naturally used after the component definition. Passing the styles object directly to this function reduces indirection.
 
+    <!-- eslint no-shadow: 0 -->
     ```jsx
     // bad
     const styles = {
@@ -202,7 +213,7 @@
 
     ```js
     // bad
-    {
+    ({
       bigBang: {
         display: 'inline-block',
         '::before': {
@@ -212,10 +223,12 @@
       universe: {
         border: 'none',
       },
-    }
+    })
+    ```
 
+    ```js
     // good
-    {
+    ({
       bigBang: {
         display: 'inline-block',
 
@@ -227,7 +240,7 @@
       universe: {
         border: 'none',
       },
-    }
+    })
     ```
 
 ## Inline
@@ -243,7 +256,9 @@
         <div style={{ display: 'table', margin: spacing }} />
       );
     }
+    ```
 
+    ```js
     // good
     function MyComponent({ styles, spacing }) {
       return (
@@ -272,7 +287,9 @@
         color: '#bada55',
       },
     }))(MyComponent);
+    ```
 
+    ```js
     // good
     export default withStyles(({ color }) => ({
       chuckNorris: {
@@ -290,7 +307,9 @@
         fontStyle: 'italic',
       },
     }))(MyComponent);
+    ```
 
+    ```js
     // good
     export default withStyles(({ font }) => ({
       towerOfPisa: {
@@ -311,7 +330,9 @@
         lineHeight: 1.5,
       },
     }))(MyComponent);
+    ```
 
+    ```js
     // good
     export default withStyles(({ font }) => ({
       towerOfPisa: {
@@ -329,14 +350,18 @@
         bottom: '-6912px', // 6 feet
       },
     }))(MyComponent);
+    ```
 
+    ```js
     // good
     export default withStyles(({ units }) => ({
       rip: {
         bottom: units(864), // 6 feet, assuming our unit is 8px
       },
     }))(MyComponent);
+    ```
 
+    ```js
     // good
     export default withStyles(({ unit }) => ({
       rip: {
@@ -358,7 +383,9 @@
         },
       },
     }))(MyComponent);
+    ```
 
+    ```js
     // good
     export default withStyles(({ breakpoint }) => ({
       container: {
@@ -375,6 +402,7 @@
 
   > Why? Many CSS-in-JavaScript implementations merge style objects together which makes specifying fallbacks for the same property (e.g. `display`) a little tricky. To keep the approach unified, put these fallbacks in the theme.
 
+    <!-- eslint-disable -->
     ```js
     // bad
     export default withStyles(() => ({

@@ -1,0 +1,17 @@
+{
+  "extends": "airbnb",
+  "globals": {
+    "css": false,
+    "MyComponent": false,
+    "ThemedStyleSheet": false,
+    "withStyles": false
+  },
+  "rules": {
+    "no-unused-expressions": 0,
+    "semi": 0,
+    "no-unused-vars": 0,
+    "react/react-in-jsx-scope": 0,
+    "react/jsx-filename-extension": 0,
+    "react/prop-types": 0
+  }
+}
